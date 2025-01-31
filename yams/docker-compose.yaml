@@ -1,3 +1,4 @@
+x-project-name: yams
 services:
   # jellyfin is used to serve your media to the client devices
   jellyfin:
@@ -25,6 +26,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - WEBUI_PORT=8081
+      - TORRENTING_PORT=49852
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${MEDIA_DIRECTORY}:/data
@@ -32,6 +34,8 @@ services:
     restart: unless-stopped
     ports:
       - 8081:8081 # qbittorrent
+      - 49852:49852
+      - 49852:49852/udp
     #network_mode: "service:gluetun"
 
   # SABnzbd is used to download from usenet

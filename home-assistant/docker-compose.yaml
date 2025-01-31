@@ -1,0 +1,28 @@
+x-project-name: home-assistant
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:latest
+    container_name: homeassistant
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Stockholm # Specify a timezone to use
+      - PUID=1000 # User ID to run as
+      - PGID=100 # Group ID to run as
+    volumes:
+      - /opt/docker/home-assistant/config:/config # Contains all relevant configuration files.
+    ports:
+      - 8123:8123
+    networks:
+      lan:
+        ipv4_address: 192.168.1.10  # Assign a static IP in your LAN
+
+networks:
+  lan:
+    driver: macvlan
+    driver_opts:
+      parent: wlp2s0  # Attach macvlan to the server's main LAN interface
+    ipam:
+      config:
+        - subnet: "192.168.1.0/24"  # Same subnet as your LAN
+          ip_range: "192.168.1.8/29"  # Ensure no IP conflicts with other devices on the network
+          gateway: "192.168.1.1"  # Set the gateway to your OpenWrt router's IP
