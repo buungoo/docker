@@ -20,7 +20,7 @@ networks:
   lan:
     driver: macvlan
     driver_opts:
-      parent: wlp2s0  # Attach macvlan to the server's main LAN interface
+      parent: enp3s0  # Attach macvlan to the server's main LAN interface
     ipam:
       config:
         - subnet: "192.168.1.0/24"  # Same subnet as your LAN
